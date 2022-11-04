@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+  REGISTRY: clemm.azurecr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -70,7 +70,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ needs.set-env.outputs.repository }}/${{ matrix.services.appName }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.services.appName }}
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
@@ -91,7 +91,7 @@ jobs:
       - name: Output image tag
         id: image-tag
         run: |
-          echo ::set-output name=image-${{ matrix.services.appName }}::${{ env.REGISTRY }}/$GITHUB_REPOSITORY/${{ matrix.services.appName }}:sha-${{ needs.set-env.outputs.version }} | tr '[:upper:]' '[:lower:]'
+          echo ::set-output name=image-${{ matrix.services.appName }}::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.services.appName }}:sha-${{ needs.set-env.outputs.version }} | tr '[:upper:]' '[:lower:]'
 
   deploy:
     if: github.repository != 'Azure-samples/containerapps-dapralbums'
