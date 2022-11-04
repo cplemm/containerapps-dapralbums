@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: ${{ secrets.REGISTRY_LOGIN_SERVER }}
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -91,7 +91,7 @@ jobs:
       - name: Output image tag
         id: image-tag
         run: |
-          echo ::set-output name=image-${{ matrix.services.appName }}::${{ secrets.REGISTRY_LOGIN_SERVER }}/$GITHUB_REPOSITORY/${{ matrix.services.appName }}:sha-${{ needs.set-env.outputs.version }} | tr '[:upper:]' '[:lower:]'
+          echo ::set-output name=image-${{ matrix.services.appName }}::${{ env.REGISTRY }}/$GITHUB_REPOSITORY/${{ matrix.services.appName }}:sha-${{ needs.set-env.outputs.version }} | tr '[:upper:]' '[:lower:]'
 
   deploy:
     if: github.repository != 'Azure-samples/containerapps-dapralbums'
