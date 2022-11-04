@@ -37,7 +37,7 @@ jobs:
     needs: set-env
     permissions:
       contents: read
-      packages: read|write
+      packages: write
 
     outputs:
       api-image: ${{ steps.image-tag.outputs.image-album-api }}
@@ -98,7 +98,7 @@ jobs:
     if: github.repository != 'Azure-samples/containerapps-dapralbums'
     runs-on: ubuntu-latest
     permissions:
-      packages: read|write
+      packages: read
     needs: [package-services]
     steps:
       - name: Checkout repository
