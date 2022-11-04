@@ -90,8 +90,7 @@ jobs:
 
       - name: Output image tag
         id: image-tag
-        run: |
-          echo ::set-output name=image-${{ matrix.services.appName }}::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.services.appName }}:sha-${{ needs.set-env.outputs.version }} | tr '[:upper:]' '[:lower:]'
+        run: echo "::set-output name=image-${{ matrix.services.appName }}::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.services.appName }}:sha-${{ needs.set-env.outputs.version }}" | tr '[:upper:]' '[:lower:]'
 
   deploy:
     if: github.repository != 'Azure-samples/containerapps-dapralbums'
